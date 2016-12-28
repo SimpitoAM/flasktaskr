@@ -9,14 +9,42 @@
 		<form action="{{ url_for('new_task') }}" method="post">
 			{{ form.csrf_token }}
 			<p>
-				{{ form.name.label }}: {{ form.name }}<br>
-				{{ form.due_date.label }}: {{ form.due_date }}<br>
-				{{ form.priority.label }}: {{ form.priority }}
+			{{ form.name(placeholder="name") }}
+			<span class="error">
+				{% if form.name.errors %}
+					{% for error in form.name.errors %}
+						{{ error }}
+					{% endfor %}
+				{% endif %}
+			</span>
+			</p>
+			<p>
+			{{ form.due_date(placeholder="due date") }}
+			<span class="error">
+				{% if form.due_date.errors %}
+					{% for error in form.due_date.errors %}
+						{{ error }}
+					{% endfor %}
+				{% endif %}
+			</span>
+			</p>
+			<p>
+			{{ form.priority.label }}
+			{{ form.priority }}
+			<span class="error">
+				{% if form.priority.errors %}
+					{% for error in form.priority.errors %}
+						{{ error }}
+					{% endfor %}
+				{% endif %}
+			</span>
 			</p>
 			<p><input type="submit" value="Submit"></p>
 		</form>
 </div>
-<div class ="entries">
+<div class="entries">
+	<br>
+	<br>
 	<h2>Open tasks:</h2>
 	<div class="datagrid">
 		<table>
@@ -27,8 +55,9 @@
 					<th width="100px"><strong>Posted Date</strong></th>
 					<th width="50px"><strong>Priority</strong></th>
 					<th width="90px"><strong>Posted By</strong></th>
-				<tr>
-			<thead>
+					<th><strong>Actions</strong></th>
+				</tr>
+			</thead>
 			{% for task in open_tasks %}
 				<tr>
 					<td width="200px">{{ task.name }}</td>
@@ -77,5 +106,3 @@
 <div>
 
 {% endblock %}
-
-
